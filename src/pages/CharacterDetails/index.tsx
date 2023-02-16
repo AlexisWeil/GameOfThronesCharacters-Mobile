@@ -44,7 +44,10 @@ const CharacterDetails = () => {
       }
 
       {!isFetchingCharacters && character &&
-        <CharacterListItem character={character} />
+        <CharacterListItem
+          direction="column"
+          character={character}
+        />
       }
 
       <Link to="/list">

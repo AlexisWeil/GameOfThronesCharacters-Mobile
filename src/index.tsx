@@ -4,8 +4,12 @@ import CharactersList from './pages/CharactersList';
 import { Provider } from 'react-redux';
 import store from './store';
 import CharacterDetails from './pages/CharacterDetails';
+import AddCharacter from './pages/AddCharacter';
+import { initializeDatabase } from './utils/Database';
 
 export const THRONES_API = 'https://thronesapi.com/api/v2';
+
+initializeDatabase();
 
 const App = () => {
   return (
@@ -15,6 +19,7 @@ const App = () => {
           <Route path="/" element={<Home/>} />
           <Route path="/list" element={<CharactersList />} />
           <Route path="/character/:id" element={<CharacterDetails />} />
+          <Route path="/add-character" element={<AddCharacter />} />
         </Routes>
       </NativeRouter>
     </Provider>

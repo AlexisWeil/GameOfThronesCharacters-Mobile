@@ -3,6 +3,8 @@ import { Character, CharacterAPI } from '../../models/Character';
 import { addCharacterAction, deleteCharacterAction, setCharactersAction, updateCharacterAction } from './actions';
 import axios from 'axios';
 import { THRONES_API } from '../../index';
+import { insertCharacter, listCharacters } from '../../daos/CharactersDAO';
+import { fetchCharactersFromAPIAndInsertInDB } from './api';
 
 export interface CharactersState {
   list: Character[],
@@ -18,19 +20,27 @@ const initialState: CharactersState = {
 export const fetchCharacters = createAsyncThunk(
   'tasks/fetchCharacters',
   () =>
-    axios.get<CharacterAPI[]>(THRONES_API + '/Characters')
-      .then((res) =>
-        // Les données retournées par l'API sont converties en Character
-        res.data.map((c: CharacterAPI) =>
-          Character(
-            c.id,
-            c.fullName,
-            c.imageUrl,
-            c.title,
-            c.family
-          )
-        )
-      )
+    // Récupère les personnages depuis la base SQLite
+    listCharacters()
+      .then((characters) => {
+        // S'il n'y a aucun personnage en base, alors les récupérer
+        // depuis l'API REST et les insérer ensuite en base
+        if (characters.length <= 0) {
+          return fetchCharactersFromAPIAndInsertInDB();
+        }
+
+        return characters;
+      })
+);
+
+export const addNewCharacter = createAsyncThunk(
+  'tasks/addNewCharacter',
+  (character: Character) =>
+    insertCharacter(character)
+      .then((idInserted) => ({
+        ...character,
+        id: idInserted
+      }))
 );
 
 const reducer = createSlice({
@@ -60,6 +70,11 @@ const reducer = createSlice({
     builder.addCase(
       fetchCharacters.fulfilled,
       setCharactersAction
+    );
+
+    builder.addCase(
+      addNewCharacter.fulfilled,
+      addCharacterAction
     );
 
   }

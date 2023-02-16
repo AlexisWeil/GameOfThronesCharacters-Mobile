@@ -5,17 +5,18 @@ import { CharacterListItemWrapper, CharacterListItemDetails, CharacterFamily, Ch
 import { Link } from 'react-router-native';
 
 interface Props {
-  character: Character
+  character: Character,
+  direction: 'column' | 'row'
 }
 
-const CharacterListItem: React.FC<Props> = ({ character }) =>
+const CharacterListItem: React.FC<Props> = ({ character, direction }) =>
   <Link to={"/character/" + character.id}>
-    <CharacterListItemWrapper>
-      <CharacterId>ID: {character.id}</CharacterId>
+    <CharacterListItemWrapper direction={direction}>
+      <CharacterId direction={direction}>ID: {character.id}</CharacterId>
 
-      <CharacterImage source={{ uri: character.imageUrl }} />
+      <CharacterImage direction={direction} source={{ uri: character.imageUrl }} />
 
-      <CharacterListItemDetails>
+      <CharacterListItemDetails direction={direction}>
         <CharacterName>{character.name}</CharacterName>
         <CharacterFamily>{character.family}</CharacterFamily>
         <CharacterTitle>{character.title}</CharacterTitle>
