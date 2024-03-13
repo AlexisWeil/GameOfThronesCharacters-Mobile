@@ -32,8 +32,9 @@ const CharactersList = () => {
         <FlatList
           style={{ width: '100%' }}
           data={charactersState.list}
-          renderItem={({ item }) =>
+          renderItem={({ item, index }) =>
             <CharacterListItem
+              id={index}
               direction="row"
               character={item}
             />

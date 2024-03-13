@@ -1,7 +1,7 @@
-import { Character, CharacterAPI } from '../../models/Character';
-import axios from 'axios';
-import { THRONES_API } from '../../index';
-import { insertCharacter } from '../../daos/CharactersDAO';
+import { Character, CharacterAPI } from '../../models/Character'
+import axios from 'axios'
+import { insertCharacter } from '../../daos/CharactersDAO'
+import { THRONES_API } from '../../utils/api'
 
 export const fetchCharactersFromAPIAndInsertInDB = (): Promise<Character[]> =>
   axios.get<CharacterAPI[]>(THRONES_API + '/Characters')

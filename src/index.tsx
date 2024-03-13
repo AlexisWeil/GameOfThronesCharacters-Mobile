@@ -6,8 +6,8 @@ import store from './store';
 import CharacterDetails from './pages/CharacterDetails';
 import AddCharacter from './pages/AddCharacter';
 import { initializeDatabase } from './utils/Database';
-
-export const THRONES_API = 'https://thronesapi.com/api/v2';
+import 'react-native-reanimated';
+import 'react-native-gesture-handler';
 
 initializeDatabase();
 

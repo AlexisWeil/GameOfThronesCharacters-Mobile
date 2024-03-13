@@ -1,0 +1,1 @@
+export const THRONES_API = 'https://thronesapi.com/api/v2';

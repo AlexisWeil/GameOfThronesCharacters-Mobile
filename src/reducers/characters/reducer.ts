@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Character, CharacterAPI } from '../../models/Character';
 import { addCharacterAction, deleteCharacterAction, setCharactersAction, updateCharacterAction } from './actions';
 import axios from 'axios';
-import { THRONES_API } from '../../index';
 import { insertCharacter, listCharacters } from '../../daos/CharactersDAO';
 import { fetchCharactersFromAPIAndInsertInDB } from './api';
 
